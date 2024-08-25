@@ -42,7 +42,8 @@ class OrderPageLocators:
 
     COMMENT_FOR_COURIER = (By.XPATH, "//input[@placeholder='Комментарий для курьера']")
 
-    ORDER_BUTTON = (By.XPATH, "//button[@class='Button_Button__ra12g Button_Middle__1CSJM']")
+    # правки после код-ревью: заменил локатор, но пришлось сделать длинным, тк просто contains и текст - выдает 2 кнопки
+    ORDER_BUTTON = (By.XPATH, "//div[contains(@class, 'Order_Button')]/button[contains(@class, 'Button') and text()='Заказать']")
 
     MODAL_WINDOW_BUTTONS = {
         "yes": (By.XPATH, "//button[text()='Да']"),

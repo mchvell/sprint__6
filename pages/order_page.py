@@ -1,5 +1,11 @@
 import allure
 
+
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.ui import WebDriverWait
+
+
+
 from pages.base_page import BasePage
 from locators.order_page_locators import OrderPageLocators as op
 from selenium.webdriver.common.by import By
@@ -95,3 +101,19 @@ class OrderPage(BasePage):
             logo_locator = self.logos.get(value)
             self.find_element(logo_locator, 10).click()
         return self
+
+    @allure.step("Получаем список вкладок, ожидаем прогрузки новой вкладки")
+    def switch_tab_focus(self):
+        tab_list = self.driver.window_handles
+        tab = self.driver.switch_to.window(tab_list[-1])
+
+        # немного наколхозил... можно было бы сделать отдельный метода вейтов
+        WebDriverWait(self.driver, 10).until(
+            EC.url_changes("about:blank")
+        )
+
+        WebDriverWait(self.driver, 10).until(
+            EC.presence_of_element_located(("tag name", "body"))
+        )
+
+        return tab
